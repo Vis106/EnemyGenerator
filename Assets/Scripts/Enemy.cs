@@ -3,14 +3,17 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] float _speed;
+    [SerializeField] Vector3 _offset;
+
+    private Transform _target;
 
     private void Update()
     {
-        Movement.Forward(_speed, this.gameObject);
-    }
+        EnemyMovement.Move(_speed, this, _target, _offset);
+    }       
 
-    public void SetRotate(float angle)
+    public void SetTarget(Transform target)
     {
-        transform.Rotate(0.0f, angle, 0.0f);
+        _target = target;
     }
 }

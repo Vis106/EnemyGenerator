@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public static class Movement 
+public static class EnemyMovement
 {
-    public static void Forward(float speed, GameObject gameObject)
-    {        
-        Vector3 newPosition = gameObject.transform.forward * speed * Time.deltaTime;
-        gameObject.transform.position += newPosition;
+    public static void Move(float speed, Enemy enemy, Transform target, Vector3 offset)
+    {
+        enemy.transform.LookAt(target.position);
+        enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, target.position, speed * Time.deltaTime);
     }
 }
