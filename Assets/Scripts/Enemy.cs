@@ -9,11 +9,17 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        EnemyMovement.Move(_speed, this, _target, _offset);
-    }       
+        Move();
+    }
 
     public void SetTarget(Transform target)
     {
         _target = target;
+    }
+
+    private void Move()
+    {
+        transform.LookAt(_target.position);
+        transform.position = Vector3.MoveTowards(transform.position, _target.position + _offset, _speed * Time.deltaTime);
     }
 }

@@ -9,15 +9,15 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private ObjectPool _objectPool;
     [SerializeField] private Transform _target;
 
-    private Coroutine _spawnEnemyWithDelay;
+    private Coroutine _spawnEnemyWithDelay;          
 
     private void Start()
     {
-        _objectPool.Initialize(_enemyPrefab.gameObject);
+        _objectPool.Initialize(_enemyPrefab.gameObject); 
         TurnOn();
     }
 
-    private IEnumerator SpawnEnemy()
+    private IEnumerator Spawning()
     {
         var timeInterval = new WaitForSeconds(_delay);
 
@@ -25,16 +25,16 @@ public class EnemySpawner : MonoBehaviour
         {
             yield return timeInterval;
 
-            SetEnemy(enemy, _spawnPoint.position);
+            Spawn(enemy, _spawnPoint.position);
         }
     }
 
-    private void SetEnemy(GameObject poolEnemy, Vector3 spawnPoint)
+    private void Spawn(GameObject poolEnemy, Vector3 spawnPoint)
     {
         poolEnemy.SetActive(true);
         poolEnemy.transform.position = spawnPoint;
 
-        if (poolEnemy.TryGetComponent<Enemy>(out Enemy enemy))
+        if (poolEnemy.TryGetComponent(out Enemy enemy))
             enemy.SetTarget(_target);
     }
 
@@ -45,6 +45,6 @@ public class EnemySpawner : MonoBehaviour
             StopCoroutine(_spawnEnemyWithDelay);
         }
 
-        _spawnEnemyWithDelay = StartCoroutine(SpawnEnemy());
+        _spawnEnemyWithDelay = StartCoroutine(Spawning());
     }
 }
