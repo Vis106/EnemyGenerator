@@ -13,7 +13,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        _objectPool.Initialize(_enemyPrefab.gameObject); 
+        _objectPool.Initialize(_enemyPrefab); 
         TurnOn();
     }
 
@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
     {
         var timeInterval = new WaitForSeconds(_delay);
 
-        while (_objectPool.TryGetObject(out GameObject enemy))
+        while (_objectPool.TryGetObject(out Enemy enemy))
         {
             yield return timeInterval;
 
@@ -29,9 +29,9 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void Spawn(GameObject poolEnemy, Vector3 spawnPoint)
+    private void Spawn(Enemy poolEnemy, Vector3 spawnPoint)
     {
-        poolEnemy.SetActive(true);
+        poolEnemy.gameObject.SetActive(true);
         poolEnemy.transform.position = spawnPoint;
 
         if (poolEnemy.TryGetComponent(out Enemy enemy))
